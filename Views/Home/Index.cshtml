@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<!DOCTYPE html "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <header>
+      <p id="demo"></p>
+      <p id="author"></p>
+  </header>
+ <img id="myImg">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google Books Embedded Viewer API Example</title>
+    <script type="text/javascript">
+      function initialize() {
+         var url = "https://www.googleapis.com/books/v1/volumes?&q=isbn:9789750717710";
+var xhr = new XMLHttpRequest();
+xhr.open("GET", url);
+xhr.onreadystatechange = function () {
+   if (xhr.readyState === 4) {
+      console.log(xhr.status);
+      const obj = JSON.parse(xhr.responseText);
+      document.getElementById("demo").innerHTML = obj.items[0].volumeInfo.title;
+      document.getElementById("author").innerHTML = obj.items[0].volumeInfo.authors[0];
+      document.getElementById("myImg").src = obj.items[0].volumeInfo.imageLinks.thumbnail;
+
+   }};
+
+xhr.send();
+
+      }
+      initialize();
+    </script>
+  </head>
+  <body>
+    <div id="viewerCanvas" style="width: 600px; height: 500px"></div>
+  </body>
+</html>

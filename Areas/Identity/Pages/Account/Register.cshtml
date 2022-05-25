@@ -1,0 +1,71 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+<!doctype html>
+<html lang="tr">
+    <script src="../../wwwroot/js/bootstrap.js"></script>
+
+<legend><center><h2><b>Registration Form</b></h2></center></legend><br>
+
+<div class="container">
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="well form-horizontal">
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">E-Mail</label> 
+                <input asp-for="Input.Email" class="form-control" autocomplete="mail" placeholder="book@bookmail.com" aria-required="true" />
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Password</label> 
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" placeholder="*****" aria-required="true" />
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Confirm Password</label> 
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" placeholder="*****" aria-required="true" />
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">First Name</label> 
+                <input asp-for="Input.Name" class="form-control" autocomplete="name" placeholder="Daghan" aria-required="true" />
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Last Name</label> 
+                <input asp-for="Input.Surname" class="form-control" autocomplete="surname" placeholder="Sinan" aria-required="true" />
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Birthday</label> 
+                <input asp-for="Input.Birthday" class="form-control" aria-required="true" />
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Adress</label> 
+                <input asp-for="Input.Adress" class="form-control" autocomplete="adress" placeholder="51th Avenue" aria-required="true" />
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">City</label> 
+                <input asp-for="Input.City" class="form-control" autocomplete="city" placeholder="Istanbul" aria-required="true" />
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Region</label> 
+                <input asp-for="Input.Region" class="form-control" autocomplete="region" placeholder="Marmara" aria-required="true" />
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Postal Code</label> 
+                <input asp-for="Input.PostalCode" class="form-control" autocomplete="postal_code" placeholder="34000" aria-required="true" />
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Country</label> 
+                <input asp-for="Input.Country" class="form-control" autocomplete="country" placeholder="Turkey" aria-required="true" />
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Phone</label> 
+                <input asp-for="Input.Phone" class="form-control" autocomplete="phone" placeholder="+90 999 999 99 99" aria-required="false" />
+            </div>
+            <hr />
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+        </form>
+</div>
+</html>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
