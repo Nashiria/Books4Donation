@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BooksForDonation.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<Customer>
+    public class ApplicationDBContext : IdentityDbContext<Customer>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options)
             : base(options)
         {
         }

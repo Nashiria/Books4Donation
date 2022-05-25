@@ -89,10 +89,6 @@ namespace BooksForDonation.Areas.Identity.Pages.Account
             [Display(Name = "Surname")]
             public string Surname { get; set; }
             [Required]
-            [DataType(DataType.Date)]
-            [Display(Name = "Birthday")]
-            public DateOnly Birthday { get; set; }
-            [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Adress")]
             public string Adress { get; set; }
@@ -112,7 +108,7 @@ namespace BooksForDonation.Areas.Identity.Pages.Account
             [DataType(DataType.Text)]
             [Display(Name = "Country")]
             public string Country { get; set; }
-           
+            [Required]
             [DataType(DataType.PhoneNumber)]
             [Display(Name = "Phone")]
             public string Phone { get; set; }
@@ -149,8 +145,17 @@ namespace BooksForDonation.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new Customer(Input.Email, Input.Password, Input.Name, Input.Surname, Input.Birthday, Input.Adress, Input.City, Input.Region, Input.PostalCode, Input.Country, Input.Phone);
-
+                var user = new Customer();
+                user.Mail = Input.Email;
+                user.Password = Input.Password;
+                user.Name = Input.Name;
+                user.Surname = Input.Surname;
+                user.Address = Input.Adress;
+                user.City = Input.City;
+                user.Region = Input.Region;
+                user.PostalCode = Input.PostalCode;
+                user.Country = Input.Country;
+                user.Phone = Input.Phone;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
