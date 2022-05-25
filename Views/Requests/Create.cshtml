@@ -1,0 +1,43 @@
+﻿@model BooksForAdoption.Models.Requests
+
+@using Microsoft.AspNetCore.Identity
+@using BooksForAdoption.Models
+@inject SignInManager<Customer> SignInManager
+@inject UserManager<Customer> UserManager
+
+@{
+    @if (SignInManager.IsSignedIn(User)){
+    ViewData["Title"] = "Make a Request";
+    <h1>Create</h1>
+    <h4>Requests</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ISBN" class="control-label"></label>
+                    <input asp-for="ISBN" class="form-control" />
+                    <span asp-validation-for="ISBN" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+   }
+   else{
+        <h1>You have to logged in to make a request.</h1>
+   }   
+
+}
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

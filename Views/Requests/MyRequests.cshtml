@@ -1,0 +1,61 @@
+﻿@model IEnumerable<BooksForAdoption.Models.Requests>
+@using BooksForAdoption.Models
+@using Microsoft.AspNetCore.Identity
+@{
+    ViewData["Title"] = "My Requests";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ISBN)
+            </th>
+            <th>
+               Date
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Manage
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    @if(User.Identity.Name==item.RecieverMail){
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ISBN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestDate)
+            </td>
+            <td>
+                 @{
+                        
+                        @if (item.RequestDate < item.ShipDate)
+                        {
+                            <p>Shipped</p>
+                        }
+                        else
+                        {
+                            <p>Waiting</p>
+                        }   
+
+                    }
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.RequestID">Details</a> |
+            </td>
+        </tr>
+}}
+    </tbody>
+</table>

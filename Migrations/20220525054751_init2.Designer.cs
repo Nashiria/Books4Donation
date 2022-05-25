@@ -4,6 +4,7 @@ using BooksForDonation.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BooksForDonation.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220525054751_init2")]
+    partial class init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,27 +23,6 @@ namespace BooksForDonation.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("BooksForAdoption.Models.Author", b =>
-                {
-                    b.Property<int>("AuthorID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorID"), 1L, 1);
-
-                    b.Property<string>("AuthorBiography")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AuthorName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AuthorID");
-
-                    b.ToTable("Author");
-                });
 
             modelBuilder.Entity("BooksForAdoption.Models.Book", b =>
                 {
@@ -191,28 +172,6 @@ namespace BooksForDonation.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("BooksForAdoption.Models.Orders", b =>
-                {
-                    b.Property<int>("OrderID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderID"), 1L, 1);
-
-                    b.Property<double>("OrderCost")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TransactionNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderID");
-
-                    b.ToTable("Orders");
-                });
-
             modelBuilder.Entity("BooksForAdoption.Models.Requests", b =>
                 {
                     b.Property<int>("RequestID")
@@ -238,98 +197,6 @@ namespace BooksForDonation.Migrations
                     b.HasKey("RequestID");
 
                     b.ToTable("Requests");
-                });
-
-            modelBuilder.Entity("BooksForAdoption.Models.Shipments", b =>
-                {
-                    b.Property<int>("ShipID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShipID"), 1L, 1);
-
-                    b.Property<string>("RecieverMail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("ShipCost")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("ShipDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TransactionNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("ShipID");
-
-                    b.ToTable("Shipments");
-                });
-
-            modelBuilder.Entity("BooksForAdoption.Models.Stocks", b =>
-                {
-                    b.Property<int>("StockID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StockID"), 1L, 1);
-
-                    b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TransactionNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("StockID");
-
-                    b.ToTable("Stocks");
-                });
-
-            modelBuilder.Entity("BooksForAdoption.Models.Transactions", b =>
-                {
-                    b.Property<int>("TransactionsNumber")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionsNumber"), 1L, 1);
-
-                    b.Property<int>("CreditCardNo")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Mail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PaymentClearanceDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("TransactionsNumber");
-
-                    b.ToTable("Transactions");
-                });
-
-            modelBuilder.Entity("BooksForAdoption.Models.WrittenBy", b =>
-                {
-                    b.Property<string>("AuthorName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OrderOfAuthorship")
-                        .HasColumnType("int");
-
-                    b.HasKey("AuthorName");
-
-                    b.ToTable("WrittenBy");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

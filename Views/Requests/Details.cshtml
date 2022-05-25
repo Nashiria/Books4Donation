@@ -1,0 +1,53 @@
+﻿@model BooksForAdoption.Models.Requests
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Requests</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ISBN)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ISBN)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RequestDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RequestDate)
+        </dd>
+        <dt class = "col-sm-2">
+            Status
+        </dt>
+        <dd class = "col-sm-10">
+            @{
+                        
+                        @if (@Model?.RequestDate < @Model?.RequestDate)
+                        {
+                            <p>Shipped</p>
+                        }
+                        else
+                        {
+                            <p>Waiting</p>
+                        }   
+
+                    }
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RecieverMail)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RecieverMail)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.RequestID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

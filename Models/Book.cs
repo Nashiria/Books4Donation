@@ -21,7 +21,7 @@ namespace BooksForAdoption.Models
         public string PublicationDate { get; set; }
         private SqlConnection connection()
         {
-            string connectionString= "Data Source=NASHIRIA\\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            string connectionString = "Data Source=NASHIRIA\\SQLEXPRESS;Initial Catalog=BooksForAdoption;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             SqlConnection toReturn = new SqlConnection(connectionString);
             toReturn.Open();
             return toReturn;
@@ -29,6 +29,22 @@ namespace BooksForAdoption.Models
         public class BookDBContext : DbContext
         {
             public DbSet<Book> Books { get; set; }
+        }
+        public void registerBook(string bookISBN)
+        {
+            SqlConnection conn = connection();
+            SqlCommand comm = new SqlCommand("INSERT INTO Book (ISBN,Title,Synopsis,PublisherName,ImageLink,pageCount,PublicationDate) VALUES (@val1,@val2,@val3,@val4,@val5,@val6,@val7);", conn);
+            comm.Connection = conn;
+            Book toRegister = getFromISBN(bookISBN);
+            comm.Parameters.AddWithValue("val1", toRegister.ISBN);
+            comm.Parameters.AddWithValue("val2", toRegister.Title);
+            comm.Parameters.AddWithValue("val3", toRegister.Synopsis);
+            comm.Parameters.AddWithValue("val4", toRegister.PublisherName);
+            comm.Parameters.AddWithValue("val5", toRegister.ImageLink);
+            comm.Parameters.AddWithValue("val6", toRegister.pageCount);
+            comm.Parameters.AddWithValue("val7", toRegister.PublicationDate);
+            comm.ExecuteNonQuery();
+
         }
         public Book getFromISBN(string bookISBN)
         {
@@ -61,12 +77,12 @@ namespace BooksForAdoption.Models
         }
         public void registerAuthorForWrittenBy(string bookISBN,string AuthorName,int order)
         {
-            WrittenBy toReturn = new WrittenBy();
             SqlConnection conn = connection();
-            SqlCommand comm = new SqlCommand("SELECT COUNT(*) FROM WrittenBy WHERE (AuthorName = @val1 AND ISBN = @val2);", conn);
-            comm.Parameters.Add(new SqlParameter("val1", AuthorName));
-            comm.Parameters.Add(new SqlParameter("val2", bookISBN));
-            Int64 UserExist = (Int64)comm.ExecuteScalar();
+            SqlCommand comm = new SqlCommand("SELECT COUNT(*) FROM WrittenBy WHERE (AuthorName = @val1 AND ISBN = @val2);");
+            comm.Connection = conn;
+            comm.Parameters.AddWithValue("val1", AuthorName);
+            comm.Parameters.AddWithValue("val2", bookISBN);
+            int UserExist = (int)comm.ExecuteScalar();
             if (UserExist > 0)
             {
 
@@ -74,9 +90,9 @@ namespace BooksForAdoption.Models
             else
             {
                 comm = new SqlCommand("INSERT INTO WrittenBy (ISBN,AuthorName,OrderOfAuthorship) VALUES (@val1, @val2,@val3);",conn);
-                comm.Parameters.Add(new SqlParameter("val1", bookISBN));
-                comm.Parameters.Add(new SqlParameter("val2", AuthorName));
-                comm.Parameters.Add(new SqlParameter("val3", order));
+                comm.Parameters.AddWithValue("val1", bookISBN);
+                comm.Parameters.AddWithValue("val2", AuthorName);
+                comm.Parameters.AddWithValue("val3", order);
                 comm.ExecuteNonQuery();
             }
         }
@@ -85,10 +101,10 @@ namespace BooksForAdoption.Models
         {
             Author toReturn = new Author();
             SqlConnection conn = connection();
-            SqlCommand comm = new SqlCommand("SELECT COUNT(*) FROM author WHERE (AuthorName = @val1);",conn);
-            comm.Parameters.Add(new SqlParameter("val1", AuthorName));
-
-            Int64 UserExist = (Int64)comm.ExecuteScalar();
+            SqlCommand comm = new SqlCommand("SELECT COUNT(*) FROM Author WHERE (AuthorName = @val1);");
+            comm.Connection = conn;
+            comm.Parameters.AddWithValue("val1", AuthorName);
+            int UserExist = (int)comm.ExecuteScalar();
             if (UserExist > 0)
             {
 
@@ -110,8 +126,8 @@ namespace BooksForAdoption.Models
                 }
 
                 comm = new SqlCommand("INSERT INTO Author (AuthorName,AuthorBiography) VALUES (@val1, @val2);", conn);
-                comm.Parameters.Add(new SqlParameter("val1", AuthorName));
-                comm.Parameters.Add(new SqlParameter("val2", toReturn.AuthorBiography));
+                comm.Parameters.AddWithValue("val1", AuthorName);
+                comm.Parameters.AddWithValue("val2", toReturn.AuthorBiography);
                 comm.ExecuteNonQuery();
              
             }
