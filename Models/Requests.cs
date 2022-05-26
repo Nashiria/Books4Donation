@@ -36,6 +36,24 @@ namespace BooksForAdoption.Models
             book.BookID=bookID(book.ISBN);
             return book;
         }
+        public List<Book> searchBooks(string searchTerm)
+        {
+            List<Book> toReturn = new List<Book>();
+            BookJson bookJson = new BookJson();
+            var url = "https://www.googleapis.com/books/v1/volumes?q=" + searchTerm;
+            System.Diagnostics.Debug.WriteLine("Url: "+url+" search term:"+ searchTerm);
+            var json = new System.Net.WebClient().DownloadString(url);
+            BookJson bjs = JsonConvert.DeserializeObject<BookJson>(json);
+            foreach (var item in bjs.Items)
+            {
+                Book book = new Book();
+                string ISBN = (item.VolumeInfo.IndustryIdentifiers).Length == 2 ? item.VolumeInfo.IndustryIdentifiers[1].Identifier : item.VolumeInfo.IndustryIdentifiers[0].Identifier;
+                book = book.getFromISBN(ISBN, false);
+                book.ISBN=ISBN;
+                toReturn.Add(book);
+            }
+            return toReturn;
+        }
         public Requests fromRequestID(int requestID)
         {
             Requests req = new Requests();

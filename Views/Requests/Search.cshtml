@@ -1,0 +1,28 @@
+﻿@model BooksForAdoption.Models.Requests
+
+@{
+    ViewData["Title"] = "Search";
+}
+<h1>Search</h1>
+<div class="container mt-5">
+        <div class="row">
+@foreach(var item in Model.searchBooks(Model.ISBN)){
+            <div class="col-md-4">
+                <div class="card p-3 w-75 ">
+                    <div class="d-inline-flex  p-2 align-middle"><img class="card-img-top"src=@item.ImageLink width="160" asp-controller="Books" asp-action="Details" asp-route-id="@item.BookID" height="350" style="align-self:center;">
+                    </div>
+                    <a asp-controller="Books" asp-action="Details" style="text-decoration: none;color:black;" asp-route-id="@item.BookID"><strong>@item.Title</strong></a>
+                    <a asp-controller="Books" asp-action="Details" style="text-decoration: none;color:black;" asp-route-id="@item.BookID">@item.getAuthor(item.ISBN)</a>
+                    <a asp-controller="Books" asp-action="Details" style="text-decoration: none;color:black;" asp-route-id="@item.BookID">@item.PublisherName</a>
+                    <div class="d-flex justify-content-between install mt-3">
+                        <div class="d-flex justify-content-between install mt-3">
+                        </div>
+                          <div class="d-flex justify-content-between install mt-3">
+                              <a class="w-100 btn btn-lg btn-primary" asp-action="Details">Request this book</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+}
+     </div>
+            </div>

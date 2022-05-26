@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model BooksForAdoption.Models.Requests
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -26,7 +27,15 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Requests" asp-action="Index">Active Requests</a>
                         </li>
                         
-                    </ul>
+                   <li class="nav-item">
+                    <li class="nav-item">
+                    <input asp-for="ISBN" asp-controller="Requests" asp-action="Search" class="form-control" />
+                    </li>
+                    <li class="nav-item">
+                    <input type="submit" value="Search" class="btn btn-primary" />
+                    </li>
+            </li>
+             </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -44,3 +53,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

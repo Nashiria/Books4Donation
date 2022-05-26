@@ -80,7 +80,17 @@ namespace BooksForDonation.Controllers
         {
             return View();
         }
+        public ActionResult SearchAct()
+        {
+            return View();
+        }
 
+
+        [HttpPost]
+        public async Task<IActionResult> Search([Bind("RequestID,ISBN")] Requests requests)
+        {
+            return View(requests);
+        }
         // POST: Requests/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
