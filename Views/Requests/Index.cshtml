@@ -12,11 +12,12 @@
 <div class="container mt-5">
         <div class="row">
             @foreach (var item in Model){
+            @if(@item.RequestDate<=item.ShipDate){
             <div class="col-md-4">
                 <div class="card p-3 w-75 ">
-                    <div class="d-inline-flex  p-2 align-middle"><img class="card-img-top"src=@item.bookData(item.ISBN).ImageLink width="160" height="350" style="align-self:center;">
+                    <div class="d-inline-flex  p-2 align-middle"><img class="card-img-top"src=@item.bookData(item.ISBN).ImageLink width="160" asp-controller="Books" asp-action="Details" asp-route-id="@item.bookData(item.ISBN).BookID" height="350" style="align-self:center;">
                     </div>
-                    <h6>@item.bookData(item.ISBN).Title</h6>
+                    <a asp-controller="Books" asp-action="Details" style="text-decoration: none;color:black;" asp-route-id="@item.bookData(item.ISBN).BookID">@item.bookData(item.ISBN).Title</a>
                     <div class="d-flex justify-content-between install mt-3">
                         <div class="d-flex justify-content-between install mt-3">
                             @if((@DateTime.Now-@item.RequestDate).Days >= 1){
@@ -46,6 +47,6 @@
                     </div>
                 </div>
             </div>
-            }
+            }}
         </div>
 </div>

@@ -88,8 +88,12 @@ namespace BooksForDonation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RequestID,ISBN")] Requests requests)
         {
-            
-                    string userName = string.Empty;
+            bool duplicate = false;
+                  foreach(var item in _context.Requests)
+            {
+                if(item.ISBN == requests.ISBN && item.RecieverMail== User.Identity.GetUserName()) { duplicate = true; return View(requests); }
+            }
+            if (!duplicate) { 
                     Book b = new Book();
                     b=b.getFromISBN(requests.ISBN,false);
                     b.registerBook(b.ISBN);
@@ -99,8 +103,8 @@ namespace BooksForDonation.Controllers
                     _context.Add(requests);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
+            }
 
-                
             return View(requests);
         }
         public async Task<IActionResult> Donate([Bind("RequestID,DonatorMail,DonatorName,DonatorNote")] Requests requests)

@@ -80,6 +80,25 @@ namespace BooksForAdoption.Models
             }
             return null;
         }
+        public string getAuthor(string bookISBN)
+        {
+            Book toReturn = new Book();
+            BookJson bookJson = new BookJson();
+            var url = "https://www.googleapis.com/books/v1/volumes?&q=isbn:" + bookISBN;
+            var json = new System.Net.WebClient().DownloadString(url);
+            BookJson bjs = JsonConvert.DeserializeObject<BookJson>(json);
+                if (bjs.Items != null)
+                {
+                        if (bjs.Items[0].VolumeInfo.Authors != null)
+                        {
+                            for (int i = 0; i < bjs.Items[0].VolumeInfo.Authors.Length; i++)
+                            {
+                                return bjs.Items[0].VolumeInfo.Authors[i];
+                            }
+                        }
+                }
+            return "There's no author data for this book";
+        }
         public void registerAuthorForWrittenBy(string bookISBN,string AuthorName,int order)
         {
             SqlConnection conn = connection();

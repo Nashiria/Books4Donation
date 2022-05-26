@@ -1,60 +1,60 @@
 ﻿@model BooksForAdoption.Models.Book
-
-@{
-    ViewData["Title"] = "Details";
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
 }
 
-<h1>Details</h1>
+.price {
+  color: grey;
+  font-size: 22px;
+}
 
-<div>
-    <h4>Book</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ISBN)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ISBN)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Synopsis)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Synopsis)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PublisherName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PublisherName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageLink)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageLink)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.pageCount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.pageCount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PublicationDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PublicationDate)
-        </dd>
-    </dl>
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <img src=@Model.ImageLink alt="Denim Jeans" style="width:100%">
+  <h1>@Html.DisplayFor(model=>model.Title)</h1>
+  <p class="price">₺@Model.Price.ToString("F")</p>
+  <p><strong>ISBN:</strong> @Model.ISBN</p>
+  <p><strong>Author:</strong>  @Model.getAuthor(Model.ISBN)</p>
+  <p><strong>Page Count:</strong>  @Model.pageCount</p>
+  <p>@Model.Synopsis</p>
+  <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                     <input asp-for="ISBN" type="hidden" class="form-control" value=@Model.ISBN/>
+                     <input asp-for="ISBN" type="hidden" class="form-control" value=@Model.ISBN/>
+                     <input asp-for="ISBN" type="hidden" class="form-control" value=@Model.ISBN/>
+                     <input asp-for="ISBN" type="hidden" class="form-control" value=@Model.ISBN/>
+                </div>
+                <div class="form-group">
+  <p><button asp-controller="Requests" asp-action="Create" type="submit" value="Create" >Request this book</button></p>
+        </div>
+            </form>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.BookID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+</body>
+</html>

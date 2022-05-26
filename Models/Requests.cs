@@ -21,9 +21,9 @@ namespace BooksForAdoption.Models
         public DateTime RequestDate { get; set; }
         public DateTime ShipDate { get; set; }
         public string RecieverMail { get; set; }
-        public string DonatorName { get; set; }
-        public string DonatorMail { get; set; }
-        public string DonatorNote { get; set; }
+        public string? DonatorName { get; set; }
+        public string? DonatorMail { get; set; }
+        public string? DonatorNote { get; set; }
         public class RequestsDBContext : DbContext
         {
             public DbSet<Requests> Requestss { get; set; }

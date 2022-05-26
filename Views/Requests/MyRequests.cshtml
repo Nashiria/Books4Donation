@@ -15,8 +15,8 @@
 <body>
    <nav class="navbar navbar-expand-lg navbar-dark dark d-lg-flex align-items-lg-start">
       <a class="navbar-brand" href="#">
-         Donations 
-         <p class="text-muted pl-1">All of your donations.</p>
+         Requests 
+         <p class="text-muted pl-1">All of your requests.</p>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button> 
       <div class="collapse navbar-collapse" id="navbarNav">
@@ -43,7 +43,7 @@
              @foreach (var item in Model) {
                 @if(User.Identity.Name==item.RecieverMail){
                <tr>
-               <td scope="row"> <span class="bi bi-book"></span> @item.bookData(item.ISBN).Title</td>
+               <td scope="row"><a asp-controller="Books" asp-action="Details" style="text-decoration: none;color:white;" asp-route-id="@item.bookData(item.ISBN).BookID">@item.bookData(item.ISBN).Title</a></td>>
                 @{
                         @if (item.RequestDate < item.ShipDate)
                         {
