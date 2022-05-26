@@ -32,7 +32,6 @@
          <thead>
             <tr>
                <th scope="col">Activity</th>
-               <th scope="col">Status</th>
                <th scope="col">Date</th>
                <th scope="col" class="text-right">Amount</th>
                <th scope="col" class="text-right">Actions</th>
@@ -41,20 +40,10 @@
          <tbody>
              @Model.OrderByDescending(a => a.ShipDate);
              @foreach (var item in Model) {
-                @if(User.Identity.Name==item.RecieverMail){
+                @if(User.Identity.Name==item.DonatorMail){
                <tr>
-               <td scope="row"> <span class="bi bi-book"></span> @item.bookData(item.ISBN).Title</td>
-                @{
-                        @if (item.RequestDate < item.ShipDate)
-                        {
-                            <td scope="row"> <span class="bi bi-book"></span>Shipped</td>
-                        }
-                        else
-                        {
-                           <td scope="row"> <span class="bi bi-book"></span> Waiting</td>
-                        }   
-                    }
-               <td class="text-muted">@item.RequestDate</td>
+               <td scope="row"><a asp-controller="Books" asp-action="Details" style="text-decoration: none;color:white;" asp-route-id="@item.bookData(item.ISBN).BookID">@item.bookData(item.ISBN).Title</a></td>>
+               <td class="text-muted">@item.ShipDate</td>
                <td class="text-muted">₺@item.bookData(item.ISBN).Price.ToString("F")</td>
                <td class="d-flex justify-content-end align-items-center"><a class="w-100 btn btn-lg btn-primary" asp-action="History" asp-route-id="@item.RequestID">View</a>
 

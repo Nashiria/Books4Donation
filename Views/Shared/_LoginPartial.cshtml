@@ -2,26 +2,52 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<Customer> SignInManager
 @inject UserManager<Customer> UserManager
-
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BooksForDonation.styles.css" asp-append-version="true" />
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Requests" style="color: white;padding: 12px;margin: 10px 0;border: none;width: 100%;border-radius: 3px;cursor: pointer;"  asp-action="MyRequests">My Requests</a>
+    </li>
+     <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Requests" style="color: white;padding: 12px;margin: 10px 0;border: none;width: 100%;border-radius: 3px;cursor: pointer;"  asp-action="MyDonations">My Donations</a>
     </li>
     <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
+        <a  class="nav-link text-dark" asp-area="Identity" style="color: white;padding: 12px;margin: 10px 0;border: none;width: 100%;border-radius: 3px;cursor: pointer;" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
+    </li>
+    <li class="nav-item">
+        <form  class="form-inline" asp-area="Identity" style="color: black;padding: 12px;margin: 10px 5px;border: none;width: 100%;border-radius: 3px;cursor: pointer;" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Logout</form>
     </li>
 }
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <a style="{
+  
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <a style="{
+  
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
 }
 </ul>

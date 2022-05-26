@@ -16,13 +16,10 @@
                 @Html.DisplayNameFor(model => model.OrderDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PaymentClearanceDate)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Mail)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreditCardNo)
+                @Html.DisplayNameFor(model => model.RequestID)
             </th>
             <th></th>
         </tr>
@@ -34,13 +31,10 @@
                 @Html.DisplayFor(modelItem => item.OrderDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PaymentClearanceDate)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Mail)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreditCardNo)
+                @Html.DisplayFor(modelItem => item.RequestID)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.TransactionsNumber">Edit</a> |

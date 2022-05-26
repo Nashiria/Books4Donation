@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BooksForDonation.styles.css" asp-append-version="true" />
-
-<!------ Include the above in your HEAD tag ---------->
+@{
+    ViewData["Title"] = "My Donatinons";
+}
 <div class="container mt-5">
         <div class="row">
             @foreach (var item in Model){
+                @if(User.Identity.Name==item.DonatorMail){
             <div class="col-md-4">
                 <div class="card p-3 w-75 ">
                     <div class="d-inline-flex  p-2 align-middle"><img class="card-img-top"src=@item.bookData(item.ISBN).ImageLink width="160" height="350" style="align-self:center;">
@@ -19,33 +21,30 @@
                     <h6>@item.bookData(item.ISBN).Title</h6>
                     <div class="d-flex justify-content-between install mt-3">
                         <div class="d-flex justify-content-between install mt-3">
-                            @if((@DateTime.Now-@item.RequestDate).Days >= 1){
-                        <span>@((@DateTime.Now-@item.RequestDate).Days) Days Ago</span>
+                            @if((@DateTime.Now-@item.ShipDate).Days >= 1){
+                        <span>@((@DateTime.Now-@item.ShipDate).Days) Days Ago</span>
                                     
                                 }
-                            @if((@DateTime.Now-@item.RequestDate).Hours >= 1 && (@DateTime.Now-@item.RequestDate).Days < 1){
-                        <span>@((@DateTime.Now-@item.RequestDate).Hours) Hours Ago</span>
+                            @if((@DateTime.Now-@item.ShipDate).Hours >= 1 && (@DateTime.Now-@item.ShipDate).Days < 1){
+                        <span>@((@DateTime.Now-@item.ShipDate).Hours) Hours Ago</span>
                                     
                                 }
-                            @if((@DateTime.Now-@item.RequestDate).Hours < 1 && (@DateTime.Now-@item.RequestDate).Days < 1){
-                        <span>@((@DateTime.Now-@item.RequestDate).Minutes) Minutes Ago</span>
+                            @if((@DateTime.Now-@item.ShipDate).Hours < 1 && (@DateTime.Now-@item.ShipDate).Days < 1){
+                        <span>@((@DateTime.Now-@item.ShipDate).Minutes) Minutes Ago</span>
                                 }
                         </div>
                           <div class="d-flex justify-content-between install mt-3">
                         @if (User.Identity.Name != item.RecieverMail)
                         {
                            @if (SignInManager.IsSignedIn(User)){
-                              <a class="w-100 btn btn-lg btn-primary" asp-action="Details" asp-route-id="@item.RequestID">Donate ₺@item.bookData(item.ISBN).Price.ToString("F")</a>
-                            }
-                            @if (!SignInManager.IsSignedIn(User)){
-                            
-                               <a class="w-100 btn btn-lg btn-primary" asp-area="Identity" asp-page="/Account/Register">Donate ₺@item.bookData(item.ISBN).Price.ToString("F")</a>
-                        }
+                              <a class="w-100 btn btn-lg btn-primary" asp-action="Details" asp-route-id="@item.RequestID">View</a>
+                           }
                         }
                         </div>
                     </div>
                 </div>
             </div>
             }
-        </div>
-</div>
+}
+ </div>
+  </div>

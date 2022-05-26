@@ -56,7 +56,7 @@ namespace BooksForDonation.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TransactionsNumber,OrderDate,PaymentClearanceDate,Mail,CreditCardNo")] Transactions transactions)
+        public async Task<IActionResult> Create([Bind("TransactionsNumber,OrderDate,Mail,RequestID")] Transactions transactions)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace BooksForDonation.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TransactionsNumber,OrderDate,PaymentClearanceDate,Mail,CreditCardNo")] Transactions transactions)
+        public async Task<IActionResult> Edit(int id, [Bind("TransactionsNumber,OrderDate,Mail,RequestID")] Transactions transactions)
         {
             if (id != transactions.TransactionsNumber)
             {

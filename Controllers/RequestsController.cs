@@ -36,6 +36,12 @@ namespace BooksForDonation.Controllers
                         View(await _context.Requests.ToListAsync()) :
                         Problem("Entity set 'ApplicationDBContext.Requests'  is null.");
         }
+        public async Task<IActionResult> MyDonations()
+        {
+            return _context.Requests != null ?
+                        View(await _context.Requests.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDBContext.Requests'  is null.");
+        }
         // GET: Requests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -53,7 +59,22 @@ namespace BooksForDonation.Controllers
 
             return View(requests);
         }
+        public async Task<IActionResult> History(int? id)
+        {
+            if (id == null || _context.Requests == null)
+            {
+                return NotFound();
+            }
 
+            var requests = await _context.Requests
+                .FirstOrDefaultAsync(m => m.RequestID == id);
+            if (requests == null)
+            {
+                return NotFound();
+            }
+
+            return View(requests);
+        }
         // GET: Requests/Create
         public IActionResult Create()
         {
@@ -68,10 +89,9 @@ namespace BooksForDonation.Controllers
         public async Task<IActionResult> Create([Bind("RequestID,ISBN")] Requests requests)
         {
             
-                    Book newBook = new Book().getFromISBN(requests.ISBN);
                     string userName = string.Empty;
                     Book b = new Book();
-                    b=b.getFromISBN(requests.ISBN);
+                    b=b.getFromISBN(requests.ISBN,false);
                     b.registerBook(b.ISBN);
                     requests.ShipDate = DateTime.Now;
                     requests.RequestDate = DateTime.Now;
@@ -83,7 +103,19 @@ namespace BooksForDonation.Controllers
                 
             return View(requests);
         }
-
+        public async Task<IActionResult> Donate([Bind("RequestID,DonatorMail,DonatorName,DonatorNote")] Requests requests)
+        {
+            Transactions transactions = new Transactions();
+            int id = requests.RequestID;
+            
+            Requests req = await _context.Requests.FindAsync(id);
+            requests.ISBN= req.ISBN;
+            requests.RequestDate = req.RequestDate;
+            requests.RecieverMail = req.RecieverMail;
+            requests.ShipDate = req.ShipDate;
+            transactions.donateRequest(requests);
+            return RedirectToAction(nameof(Index));
+        }
         // GET: Requests/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
