@@ -1,5 +1,4 @@
-﻿@model BooksForAdoption.Models.Requests
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -26,16 +25,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Requests" asp-action="Index">Active Requests</a>
                         </li>
-                        
-                   <li class="nav-item">
-                    <li class="nav-item">
-                    <input asp-for="ISBN" asp-controller="Requests" asp-action="Search" class="form-control" />
-                    </li>
-                    <li class="nav-item">
-                    <input type="submit" value="Search" class="btn btn-primary" />
-                    </li>
-            </li>
-             </ul>
+                    <form asp-controller="Requests" asp-action="Search">
+                     <div class="form-group">
+                    <div class="input-group">
+                    <input name="ISBN" id="ISBN" placeholder="Search for books." style="background-color:#e0e0e0; class="form-control" />
+                  <span class="input-group-btn">
+                    <input type="submit" value="Search" class="btn btn-primary inline" >
+                  </span>
+                        </div>
+                      </div>
+                    </form>
+                    </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>

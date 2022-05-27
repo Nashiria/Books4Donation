@@ -1,4 +1,8 @@
 ﻿@model BooksForAdoption.Models.Requests
+@using Microsoft.AspNetCore.Identity
+@using BooksForAdoption.Models
+@inject SignInManager<Customer> SignInManager
+@inject UserManager<Customer> UserManager
 
 @{
     ViewData["Title"] = "Search";
@@ -18,7 +22,23 @@
                         <div class="d-flex justify-content-between install mt-3">
                         </div>
                           <div class="d-flex justify-content-between install mt-3">
-                              <a class="w-100 btn btn-lg btn-primary" asp-action="Details">Request this book</a>
+                           @if (SignInManager.IsSignedIn(User)){
+                                           <form asp-action="Create">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="form-group">
+                                                <label asp-for="ISBN" class="control-label"></label>
+                                                <input asp-for="ISBN" type="hidden"; value=@item.ISBN class="form-control" />
+                                                <span asp-validation-for="ISBN" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="w-100 btn btn-lg btn-primary" type="submit" value="Create" />
+                                            </div>
+                                        </form>
+                            }
+                            @if (!SignInManager.IsSignedIn(User)){
+                               <a class="w-100 btn btn-lg btn-primary" asp-area="Identity" asp-page="/Account/Register">Request this book</a>
+                        }
+                              
                         </div>
                     </div>
                 </div>

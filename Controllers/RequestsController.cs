@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Identity;
 using System.Web;
 using BooksForAdoption.Models;
 using Microsoft.AspNet.Identity;
-
 namespace BooksForDonation.Controllers
 {
     public class RequestsController : Controller
@@ -45,20 +44,23 @@ namespace BooksForDonation.Controllers
         // GET: Requests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Requests == null)
-            {
-                return NotFound();
-            }
+           
+                if (id == null || _context.Requests == null)
+                {
+                    return NotFound();
+                }
 
-            var requests = await _context.Requests
-                .FirstOrDefaultAsync(m => m.RequestID == id);
-            if (requests == null)
-            {
-                return NotFound();
-            }
+                var requests = await _context.Requests
+                    .FirstOrDefaultAsync(m => m.RequestID == id);
+                if (requests == null)
+                {
+                    return NotFound();
+                }
 
-            return View(requests);
-        }
+                return View(requests);
+            }
+           
+
         public async Task<IActionResult> History(int? id)
         {
             if (id == null || _context.Requests == null)
@@ -84,9 +86,8 @@ namespace BooksForDonation.Controllers
         {
             return View();
         }
-
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Search([Bind("RequestID,ISBN")] Requests requests)
         {
             return View(requests);

@@ -14,6 +14,7 @@ namespace BooksForAdoption.Models
         public int BookID { get; set; }
         public string ISBN { get; set; }
         public string Title { get; set; }
+        public string AuthorName { get; set; }
         public string Synopsis { get; set; }
         public string PublisherName { get; set; }
         public string ImageLink { get; set; }
@@ -35,7 +36,18 @@ namespace BooksForAdoption.Models
         public void registerBook(string bookISBN)
         {
             SqlConnection conn = connection();
-            SqlCommand comm = new SqlCommand("INSERT INTO Book (ISBN,Title,Synopsis,PublisherName,ImageLink,pageCount,PublicationDate,Price) VALUES (@val1,@val2,@val3,@val4,@val5,@val6,@val7,@val8);", conn);
+            SqlCommand comm = new SqlCommand("SELECT COUNT(*) FROM Book WHERE (ISBN = @val1);");
+            comm.Connection = conn;
+            comm.Parameters.AddWithValue("@val1", bookISBN);
+            int UserExist = (int)comm.ExecuteScalar();
+            System.Diagnostics.Debug.WriteLine("Book count in the database: " + UserExist.ToString());
+            if (UserExist > 0)
+            {
+
+            }
+            else
+            {
+            comm = new SqlCommand("INSERT INTO Book (ISBN,Title,Synopsis,PublisherName,ImageLink,pageCount,PublicationDate,Price,AuthorName) VALUES (@val1,@val2,@val3,@val4,@val5,@val6,@val7,@val8,@val9);", conn);
             comm.Connection = conn;
             Book toRegister = getFromISBN(bookISBN,true);
             comm.Parameters.AddWithValue("@val1", toRegister.ISBN);
@@ -46,7 +58,9 @@ namespace BooksForAdoption.Models
             comm.Parameters.AddWithValue("@val6", toRegister.pageCount);
             comm.Parameters.AddWithValue("@val7", toRegister.PublicationDate);
             comm.Parameters.AddWithValue("@val8", toRegister.Price);
-            comm.ExecuteNonQuery();
+            comm.Parameters.AddWithValue("@val9", toRegister.AuthorName);
+                comm.ExecuteNonQuery();
+            }
 
         }
         public Book getFromISBN(string bookISBN,bool doRegister)
@@ -58,27 +72,26 @@ namespace BooksForAdoption.Models
             BookJson bjs = JsonConvert.DeserializeObject<BookJson>(json);
             if (bjs.Items != null)
             {
-            toReturn.ISBN = bookISBN;
-            toReturn.Synopsis = bjs.Items[0].VolumeInfo.Description is null ? "There's no description for this book." : bjs.Items[0].VolumeInfo.Description; ;
-            toReturn.Title = bjs.Items[0].VolumeInfo.Title is null ? "There's no title for this book." : bjs.Items[0].VolumeInfo.Title;
-            toReturn.ImageLink = bjs.Items[0].VolumeInfo.ImageLinks is null ? "https://via.placeholder.com/128x200.png?text=No+Image+Available" : bjs.Items[0].VolumeInfo.ImageLinks.Thumbnail.ToString();
-            toReturn.PublisherName = bjs.Items[0].VolumeInfo.Publisher is null ? "There's no publisher data for this book." : bjs.Items[0].VolumeInfo.Publisher;
-            toReturn.PublicationDate = bjs.Items[0].VolumeInfo.PublishedDate is null ? "There's no publishing data for this book." : bjs.Items[0].VolumeInfo.PublishedDate;
-            toReturn.pageCount = Convert.ToInt32(bjs.Items[0].VolumeInfo.PageCount);
-            toReturn.Price = bjs.Items[0].SaleInfo.ListPrice is null ? 0.99d : bjs.Items[0].SaleInfo.ListPrice.Amount;
-                if (doRegister) { 
-            if (bjs.Items[0].VolumeInfo.Authors!=null)
-            {
-                for (int i = 0; i < bjs.Items[0].VolumeInfo.Authors.Length; i++)
-                {
-                    registerAuthor(bjs.Items[0].VolumeInfo.Authors[i]);
-                    registerAuthorForWrittenBy(bookISBN, bjs.Items[0].VolumeInfo.Authors[i], i);
+                toReturn.ISBN = bookISBN;
+                toReturn.Synopsis = bjs.Items[0].VolumeInfo.Description is null ? "There's no description for this book." : bjs.Items[0].VolumeInfo.Description; ;
+                toReturn.Title = bjs.Items[0].VolumeInfo.Title is null ? "There's no title for this book." : bjs.Items[0].VolumeInfo.Title;
+                toReturn.ImageLink = bjs.Items[0].VolumeInfo.ImageLinks is null ? "https://via.placeholder.com/128x200.png?text=No+Image+Available" : bjs.Items[0].VolumeInfo.ImageLinks.Thumbnail.ToString();
+                toReturn.PublisherName = bjs.Items[0].VolumeInfo.Publisher is null ? "There's no publisher data for this book." : bjs.Items[0].VolumeInfo.Publisher;
+                toReturn.PublicationDate = bjs.Items[0].VolumeInfo.PublishedDate is null ? "There's no publishing data for this book." : bjs.Items[0].VolumeInfo.PublishedDate;
+                toReturn.pageCount = Convert.ToInt32(bjs.Items[0].VolumeInfo.PageCount);
+                toReturn.Price = bjs.Items[0].SaleInfo.ListPrice is null ? 0.99d : bjs.Items[0].SaleInfo.ListPrice.Amount;
+                    if (bjs.Items[0].VolumeInfo.Authors != null)
+                    {
+                        for (int i = 0; i < bjs.Items[0].VolumeInfo.Authors.Length; i++)
+                        {
+                        toReturn.AuthorName = bjs.Items[0].VolumeInfo.Authors[i];
+                        }
+                    }
+                else {
+                    toReturn.AuthorName = "There's no author data for this book";
                 }
             }
-                }
-                return toReturn;
-            }
-            return null;
+            return toReturn;
         }
         
         public string getAuthor(string bookISBN)
@@ -100,65 +113,7 @@ namespace BooksForAdoption.Models
                 }
             return "There's no author data for this book";
         }
-        public void registerAuthorForWrittenBy(string bookISBN,string AuthorName,int order)
-        {
-            SqlConnection conn = connection();
-            SqlCommand comm = new SqlCommand("SELECT COUNT(*) FROM WrittenBy WHERE AuthorName=@val1 AND ISBN = @val2;");
-            comm.Connection = conn;
-            comm.Parameters.AddWithValue("@val1", AuthorName);
-            comm.Parameters.AddWithValue("@val2", bookISBN);
-            int UserExist = (int)comm.ExecuteScalar();
-            if (UserExist > 0)
-            {
-
-            }
-            else
-            {
-                comm = new SqlCommand("INSERT INTO WrittenBy (ISBN,AuthorName,OrderOfAuthorship) VALUES (@val1, @val2,@val3);",conn);
-                comm.Parameters.AddWithValue("@val1", bookISBN);
-                comm.Parameters.AddWithValue("@val2", AuthorName);
-                comm.Parameters.AddWithValue("@val3", order);
-                comm.ExecuteNonQuery();
-            }
-        }
-
-        public void registerAuthor(string AuthorName)
-        {
-            Author toReturn = new Author();
-            SqlConnection conn = connection();
-            SqlCommand comm = new SqlCommand("SELECT COUNT(*) FROM Author WHERE (AuthorName = @val1);");
-            comm.Connection = conn;
-            comm.Parameters.AddWithValue("@val1", AuthorName);
-            int UserExist = (int)comm.ExecuteScalar();
-            if (UserExist > 0)
-            {
-
-            }
-            else
-            {
-                var url = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exlimit=max&explaintext&exintro&titles=" + AuthorName.Replace(" ", "%20") + "&redirects=";
-                var json = new System.Net.WebClient().DownloadString(url);
-                toReturn.AuthorName = AuthorName;
-
-                if (json != null)
-                {
-                    AuthorJson ajs = JsonConvert.DeserializeObject<AuthorJson>(json);
-                    toReturn.AuthorBiography = ajs.Query.Pages.Page is null ? "There's no biography data for the author." : ajs.Query.Pages.Page.Extract;
-                }
-                else
-                {
-                    toReturn.AuthorBiography = "There's no biography data for the author.";
-                }
-
-                comm = new SqlCommand("INSERT INTO Author (AuthorName,AuthorBiography) VALUES (@val1, @val2);", conn);
-                comm.Parameters.AddWithValue("val1", AuthorName);
-                comm.Parameters.AddWithValue("val2", toReturn.AuthorBiography);
-                comm.ExecuteNonQuery();
-             
-            }
-            
-        }
-    }
+}
     
 
     
