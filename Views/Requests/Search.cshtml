@@ -13,11 +13,13 @@
 @foreach(var item in Model.searchBooks(Model.ISBN)){
             <div class="col-md-4">
                 <div class="card p-3 w-75 ">
-                    <div class="d-inline-flex  p-2 align-middle"><img class="card-img-top"src=@item.ImageLink width="160" asp-controller="Books" asp-action="Details" asp-route-id="@item.BookID" height="350" style="align-self:center;">
+                    <div class="d-inline-flex p-2 align-middle"><img class="card-img-top"src=@item.ImageLink width="160" asp-controller="Books" asp-action="Details" asp-route-id="@item.BookID" height="350" style="align-self:center;">
                     </div>
                     <a asp-controller="Books" asp-action="Details" style="text-decoration: none;color:black;" asp-route-id="@item.BookID"><strong>@item.Title</strong></a>
                     <a asp-controller="Books" asp-action="Details" style="text-decoration: none;color:black;" asp-route-id="@item.BookID">@item.getAuthor(item.ISBN)</a>
                     <a asp-controller="Books" asp-action="Details" style="text-decoration: none;color:black;" asp-route-id="@item.BookID">@item.PublisherName</a>
+                    <a asp-controller="Books" asp-action="Details" style="text-decoration: none;color:black;" asp-route-id="@item.BookID"><strong>@item.ISBN</strong></a>
+
                     <div class="d-flex justify-content-between install mt-3">
                         <div class="d-flex justify-content-between install mt-3">
                         </div>
@@ -26,12 +28,11 @@
                                            <form asp-action="Create">
                                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                             <div class="form-group">
-                                                <label asp-for="ISBN" class="control-label"></label>
                                                 <input asp-for="ISBN" type="hidden"; value=@item.ISBN class="form-control" />
                                                 <span asp-validation-for="ISBN" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
-                                                <input class="w-100 btn btn-lg btn-primary" type="submit" value="Create" />
+                                                <input class="w-100 btn btn-lg btn-primary" type="submit" value="Request this book" />
                                             </div>
                                         </form>
                             }

@@ -39,9 +39,7 @@ namespace BooksForAdoption.Models
         public List<Book> searchBooks(string searchTerm)
         {
             List<Book> toReturn = new List<Book>();
-            BookJson bookJson = new BookJson();
-            var url = "https://www.googleapis.com/books/v1/volumes?q=" + searchTerm;
-            System.Diagnostics.Debug.WriteLine("Url: "+url+" search term:"+ searchTerm);
+            var url = "https://www.googleapis.com/books/v1/volumes?q=" + searchTerm + "&maxResults=15";
             var json = new System.Net.WebClient().DownloadString(url);
             BookJson bjs = JsonConvert.DeserializeObject<BookJson>(json);
             foreach (var item in bjs.Items)

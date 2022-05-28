@@ -23,12 +23,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Requests" asp-action="Index">Active Requests</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Requests" asp-action="Index"  style="margin-right: 40px;">Active Requests</a>
                         </li>
-                    <form asp-controller="Requests" asp-action="Search">
+                    <form asp-controller="Requests" asp-action="Search" >
                      <div class="form-group">
                     <div class="input-group">
-                    <input name="ISBN" id="ISBN" placeholder="Search for books." style="background-color:#e0e0e0; class="form-control" />
+                    <input name="ISBN" id="ISBN" placeholder="Search for books." style="background-color:#e0e0e0; class="form-control" size="80" />
                   <span class="input-group-btn">
                     <input type="submit" value="Search" class="btn btn-primary inline" >
                   </span>

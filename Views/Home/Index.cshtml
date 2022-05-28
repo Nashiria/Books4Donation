@@ -3,47 +3,71 @@
 @inject SignInManager<Customer> SignInManager
 @inject UserManager<Customer> UserManager
 
-@{
-    @if (SignInManager.IsSignedIn(User)){
+  
     ViewData["Title"] = "Home Page";
-    <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BooksForDonation</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BooksForDonation.styles.css" asp-append-version="true" />
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background:#222
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 0;
+  text-align: center;
+  background-color: #f1f1f1;
+}
+</style>
+</head>
   <header>
       <p id="demo"></p>
       <p id="author"></p>
   </header>
- <img id="myImg">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <title>Google Books Embedded Viewer API Example</title>
-    <script type="text/javascript">
-      function initialize() {
-         var url = "https://www.googleapis.com/books/v1/volumes?&q=isbn:9789750717710";
-var xhr = new XMLHttpRequest();
-xhr.open("GET", url);
-xhr.onreadystatechange = function () {
-   if (xhr.readyState === 4) {
-      console.log(xhr.status);
-      const obj = JSON.parse(xhr.responseText);
-      document.getElementById("demo").innerHTML = obj.items[0].volumeInfo.title;
-      document.getElementById("author").innerHTML = obj.items[0].volumeInfo.authors[0];
-      document.getElementById("myImg").src = obj.items[0].volumeInfo.imageLinks.thumbnail;
 
-   }};
+<div class="container mt-5">
+              <img src="~/Assets/bookDonation.png" width="1160" height="767" style="border: 16px solid #fff;margin:50px 0px">
+                
+        <div class="row">
+        <div class="column"  style="float: left;width: 33%;padding: 0 10px;">
+         <div class="card p-3 w-75 ">
+              <img src="~/Assets/avatar1.jpg" width="%10" height="%10">
+          <div class="container">
+            <h4><b>Jane Janeson</b></h4>
+            <p>Since I was a child, I always envied people with libraries in their houses. Our family economy wasn't great so I didn't have any chance to purchase any books. When I discovered this website, I was amazed at how many people are still living through what I lived in my childhood. Since then, I'm trying to help people in need through this website. Happy reads everyone!</p>
+          </div>
+        </div>
+        </div>
+        <div class="column"  style="float: left;width: 33%;padding: 0 10px;">
+         <div class="card p-3 w-75 ">
+          <img src="~/Assets/avatar2.jpg" width="%10" height="%10">
+          <div class="container">
+            <h4><b>Chris McChris</b></h4>
+            <p>Being a student is tough, being a good student is even tougher. When I encountered this website, I couldn't believe that there were too many kind donators who are willing to support people in need. I'm thankful on behalf of the receivers.</p>
+          </div>
+        </div>
+        </div>
+        <div class="column"  style="float: left;width: 33%;padding: 0 10px;">
+         <div class="card p-3 w-75 ">
+          <img src="~/Assets/avatar3.jpg" width="%10" height="%10">
+          <div class="container">
+            <h4><b>Mike LeMike</b></h4>
+            <p>When the website reached out to me to give a recommendation speech, I couldn't refuse. So many of my students are successful thanks to "Books For Donation". I encourge them to donate too so many of the students donate their books to public libaries after they're done with it so cycle of donating continues and good will reaches to many more people.</p>
+          </div>
+        </div>
+        </div>
+  </div>
+</div>
 
-xhr.send();
-
-      }
-      initialize();
-    </script>
-  </head>
-    }
-}
-
-<!DOCTYPE html "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<authorization>
- <deny users="?" />
-
-    <div id="viewerCanvas" style="width: 600px; height: 500px"></div>
-  </authorization>
-</html>
