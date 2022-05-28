@@ -5,7 +5,8 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 style="color:#fff">@ViewData["Title"]</h1>
+<body style="background:#222;">
 <div class="row">
         <section>
             <form id="account" method="post">
@@ -23,8 +24,8 @@
                 </div>
                 <div>
                     <div class="checkbox">
-                        <label asp-for="Input.RememberMe" class="form-label">
-                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                        <label asp-for="Input.RememberMe"style="color:#fff" class="form-label">
+                            <input class="form-check-input" asp-for="Input.RememberMe" style="color:#fff"/>
                             @Html.DisplayNameFor(m => m.Input.RememberMe)
                         </label>
                     </div>
@@ -43,7 +44,7 @@
             </form>
         </section>
 </div>
-
+</body>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

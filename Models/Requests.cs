@@ -85,10 +85,11 @@ namespace BooksForAdoption.Models
         public void updateRequestFromISBN(Requests r)
         {
             SqlConnection conn = connection();
-            SqlCommand comm = new SqlCommand("UPDATE Requests SET ShipDate=@val1,DonatorMail=@val2,DonatorNote=@val3 where RequestID = @val6;", conn);
+            SqlCommand comm = new SqlCommand("UPDATE Requests SET ShipDate=@val1,DonatorName=@val2,DonatorMail=@val3,DonatorNote=@val4 where RequestID = @val6;", conn);
             comm.Parameters.AddWithValue("@val1", r.ShipDate);
-            comm.Parameters.AddWithValue("@val2", r.DonatorMail);
-            comm.Parameters.AddWithValue("@val3", r.DonatorNote);
+            comm.Parameters.AddWithValue("@val2", r.DonatorName);
+            comm.Parameters.AddWithValue("@val3", r.DonatorMail);
+            comm.Parameters.AddWithValue("@val4", r.DonatorNote);
             comm.Parameters.AddWithValue("@val6", r.RequestID);
             comm.ExecuteNonQuery();
         }

@@ -1,57 +1,40 @@
-﻿@model BooksForAdoption.Models.Requests
+﻿@Model BooksForAdoption.Models.Requests
 
 @{
     ViewData["Title"] = "History";
 }
-
+<style>
+    body {
+  font-family: Arial, Helvetica, sans-serif;
+  background:#222
+}
+</style>
 <h1>History</h1>
 
-<div>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ISBN)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ISBN)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RequestDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RequestDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ShipDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ShipDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RecieverMail)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RecieverMail)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DonatorName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DonatorName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DonatorMail)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DonatorMail)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DonatorNote)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DonatorNote)
-        </dd>
-    </dl>
-</div>
+<div class="col-md-4">
+                <div class="card p-3 w-75 ">
+                    <div class="d-inline-flex  p-2 align-middle"><img class="card-img-top"src=@Model.bookData(Model.ISBN).ImageLink width="160" asp-controller="Books" asp-action="Details" asp-route-id="@Model.bookData(Model.ISBN).BookID" height="350" style="align-self:center;">
+                    </div>
+                    <a asp-controller="Books" asp-action="Details" style="text-decoration: none;color:black;" asp-route-id="@Model.bookData(Model.ISBN).BookID">@Model.bookData(Model.ISBN).Title</a>
+                    <div class="d-flex justify-content-between install mt-3">
+                        <div class="d-flex justify-content-between install mt-3">
+                            @if((@DateTime.Now-@Model.RequestDate).Days >= 1){
+                        <span>@((@DateTime.Now-@Model.RequestDate).Days) Days Ago</span>
+                                    
+                                }
+                            @if((@DateTime.Now-@Model.RequestDate).Hours >= 1 && (@DateTime.Now-@Model.RequestDate).Days < 1){
+                        <span>@((@DateTime.Now-@Model.RequestDate).Hours) Hours Ago</span>
+                                    
+                                }
+                            @if((@DateTime.Now-@Model.RequestDate).Hours < 1 && (@DateTime.Now-@Model.RequestDate).Days < 1){
+                        <span>@((@DateTime.Now-@Model.RequestDate).Minutes) Minutes Ago</span>
+                                }
+                        </div>
+                          <div class="d-flex justify-content-between install mt-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.RequestID">Edit</a> |
     <a asp-action="Index">Back to List</a>

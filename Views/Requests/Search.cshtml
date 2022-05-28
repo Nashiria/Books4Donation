@@ -3,14 +3,22 @@
 @using BooksForAdoption.Models
 @inject SignInManager<Customer> SignInManager
 @inject UserManager<Customer> UserManager
-
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BooksForDonation</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BooksForDonation.styles.css" asp-append-version="true" />
+</head>
 @{
     ViewData["Title"] = "Search";
 }
+<body style="background:#222;">
 <h1>Search</h1>
 <div class="container mt-5">
         <div class="row">
-@foreach(var item in Model.searchBooks(Model.ISBN)){
+            @foreach(var item in Model.searchBooks(Model.ISBN)){
             <div class="col-md-4">
                 <div class="card p-3 w-75 ">
                     <div class="d-inline-flex p-2 align-middle"><img class="card-img-top"src=@item.ImageLink width="160" asp-controller="Books" asp-action="Details" asp-route-id="@item.BookID" height="350" style="align-self:center;">
@@ -47,3 +55,4 @@
 }
      </div>
             </div>
+</body>
