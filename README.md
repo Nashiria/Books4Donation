@@ -1,4 +1,5 @@
-![](https://github.com/Nashiria/Books4Donation/blob/master/wwwroot/Assets/bookDonation.png =1000x661)
+<img src="https://raw.githubusercontent.com/Nashiria/Books4Donation/master/wwwroot/Assets/bookDonation.png" width="1000" height="661">
+
 
 # Books4Donation
 
