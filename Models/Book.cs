@@ -24,7 +24,7 @@ namespace BooksForAdoption.Models
         public string PublicationDate { get; set; }
         private SqlConnection connection()
         {
-            string connectionString = "Data Source=NASHIRIA\\SQLEXPRESS;Initial Catalog=BooksForAdoption;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            string connectionString = "";
             SqlConnection toReturn = new SqlConnection(connectionString);
             toReturn.Open();
             return toReturn;
